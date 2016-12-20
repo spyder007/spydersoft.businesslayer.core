@@ -30,3 +30,4 @@ packages/
 bower_components/
 NugetPackages/
 PackageOutput/*
+*.nupkg
