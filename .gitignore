@@ -32,3 +32,4 @@ NugetPackages/
 PackageOutput/*
 *.nupkg
 **/.vs/*
+*.lock.json
