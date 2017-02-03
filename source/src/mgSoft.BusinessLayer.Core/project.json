@@ -1,9 +1,10 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.2-*",
 
   "dependencies": {
-    "mgSoft.DataLayer.Core": "1.0.0",
-    "NETStandard.Library": "1.6.0"
+    "mgSoft.DataLayer.Core": "1.0.1",
+    "NETStandard.Library": "1.6.1",
+    "System.ComponentModel.Annotations": "4.3.0"
   },
 
   "frameworks": {

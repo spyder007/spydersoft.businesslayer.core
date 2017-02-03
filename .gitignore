@@ -30,3 +30,6 @@ packages/
 bower_components/
 NugetPackages/
 PackageOutput/*
+*.nupkg
+**/.vs/*
+*.lock.json
