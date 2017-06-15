@@ -13,12 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="mgSoft.DataLayer.Core" Version="1.0.1" />
+    <PackageReference Include="mgSoft.DataLayer.Core" Version="1.0.*" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
   </ItemGroup>
-
-  <Target Name="PostcompileScript" AfterTargets="Build">
-    <Exec Command="dotnet pack --no-build --configuration $(Configuration) --output ../PackageOutput" />
-  </Target>
 
 </Project>
