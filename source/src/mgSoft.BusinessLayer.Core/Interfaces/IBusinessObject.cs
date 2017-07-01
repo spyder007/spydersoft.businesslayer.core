@@ -40,6 +40,8 @@ namespace mgSoft.BusinessLayer.Core.Interfaces
 
         DateTimeOffset DateUpdated { get; set; }
 
+        string DisplayName { get; }
+
         #endregion BO Fields
 
         #region BO Lifecycle Contracts

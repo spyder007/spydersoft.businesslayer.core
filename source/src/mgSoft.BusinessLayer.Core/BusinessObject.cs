@@ -5,11 +5,11 @@ using mgSoft.DataLayer.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
 
 namespace mgSoft.BusinessLayer.Core
 {
@@ -56,6 +56,8 @@ namespace mgSoft.BusinessLayer.Core
         #endregion Constructors
 
         #region IBusinessObject Implementation
+
+        public virtual string DisplayName => GetType().ToString();
 
         /// <summary>
         /// Gets the data contract identifier.
