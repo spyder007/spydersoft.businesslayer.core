@@ -349,15 +349,16 @@ namespace mgSoft.BusinessLayer.Core
         /// </returns>
         protected virtual BusinessResult<IBusinessObject> SaveBusinessObject()
         {
-            BusinessResult<IBusinessObject> saveBusinessObjectResults = new BusinessResult<IBusinessObject>();
+            var saveBusinessObjectResults = new BusinessResult<IBusinessObject>
+            {
+                IsSuccessful = true
+            };
 
             try
             {
                 GetIdValues();
                 SetTimeStampFields(DataContractId == 0);
                 OnSaving();
-                var updatedItem = Store.SaveItem<TDataContract>(DataContract);
-
                 DataContract = Store.SaveItem(DataContract);
                 OnSaved();
                 saveBusinessObjectResults.Result = this;
@@ -366,6 +367,7 @@ namespace mgSoft.BusinessLayer.Core
             {
                 saveBusinessObjectResults.Messages.Add(new ResultMessage(ResultMessageType.ERROR, ex.Message, ex.Message));
                 saveBusinessObjectResults.ResultType = RESULT_TYPE.GENERAL_FAILURE;
+                saveBusinessObjectResults.IsSuccessful = false;
             }
 
             return saveBusinessObjectResults;
