@@ -12,10 +12,16 @@ namespace mgSoft.BusinessLayer.Core
     public class BusinessObjectFactory
     {
         protected IDataStore Store { get; set; }
+        protected IServiceInjector ServiceInjector { get; set; }
 
-        public BusinessObjectFactory(IDataStore store)
+        public BusinessObjectFactory(IDataStore store): this(store, null)
+        {
+        }
+
+        public BusinessObjectFactory(IDataStore store, IServiceInjector serviceInjector)
         {
             Store = store;
+            ServiceInjector = serviceInjector;
         }
 
         public TBusinessObject GetNew<TBusinessObject>() where TBusinessObject : IBusinessObject
@@ -59,6 +65,8 @@ namespace mgSoft.BusinessLayer.Core
         {
             var dsConsumer = businessObject as IDataStoreConsumer;
             dsConsumer?.SetDataStore(Store);
+
+            ServiceInjector?.InjectServices(businessObject);
         }
     }
 }
