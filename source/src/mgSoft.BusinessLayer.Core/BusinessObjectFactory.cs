@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using mgSoft.BusinessLayer.Core.Interfaces;
-using mgSoft.DataLayer;
+﻿using mgSoft.BusinessLayer.Core.Interfaces;
 using mgSoft.DataLayer.Core;
+using System;
 
 namespace mgSoft.BusinessLayer.Core
 {
-    public class BusinessObjectFactory
+    public class BusinessObjectFactory : IBusinessObjectFactory
     {
+        #region Protected Properties
+
         protected IDataStore Store { get; set; }
         protected IServiceInjector ServiceInjector { get; set; }
 
-        public BusinessObjectFactory(IDataStore store): this(store, null)
+        #endregion Protected Properties
+
+        #region Constructors
+
+        public BusinessObjectFactory(IDataStore store) : this(store, null)
         {
         }
 
@@ -23,6 +24,10 @@ namespace mgSoft.BusinessLayer.Core
             Store = store;
             ServiceInjector = serviceInjector;
         }
+
+        #endregion Constructors
+
+        #region IBusinessObjectFactory Interface
 
         public TBusinessObject GetNew<TBusinessObject>() where TBusinessObject : IBusinessObject
         {
@@ -50,12 +55,11 @@ namespace mgSoft.BusinessLayer.Core
             return businessObject;
         }
 
-
         public TBusinessObject GetBusinessObject<TBusinessObject, TDataContract>(TDataContract contract)
             where TBusinessObject : IBusinessObject<TDataContract>
             where TDataContract : IDataItem
         {
-            var businessObject = (TBusinessObject) Activator.CreateInstance(typeof(TBusinessObject), contract);
+            var businessObject = (TBusinessObject)Activator.CreateInstance(typeof(TBusinessObject), contract);
             InjectServices(businessObject);
             businessObject.SetKeyFieldsFromId();
             return businessObject;
@@ -68,5 +72,7 @@ namespace mgSoft.BusinessLayer.Core
 
             ServiceInjector?.InjectServices(businessObject);
         }
+
+        #endregion IBusinessObjectFactory Interface
     }
 }
