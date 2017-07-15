@@ -120,6 +120,8 @@ namespace mgSoft.BusinessLayer.Core
                     businessResult.Messages.AddRange(saveBusinessObjectResults.Messages);
                     businessResult.ResultType = saveBusinessObjectResults.ResultType;
                 }
+                businessResult.IsSuccessful = saveBusinessObjectResults.IsSuccessful &&
+                                              saveBusinessObjectResults.ResultType == RESULT_TYPE.SUCCESS;
                 businessResult.Result = saveBusinessObjectResults.Result;
             }
             else
