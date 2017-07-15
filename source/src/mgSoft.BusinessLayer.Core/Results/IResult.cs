@@ -13,7 +13,7 @@ namespace mgSoft.BusinessLayer.Core.Results
         /// <value>
         /// The type of the result.
         /// </value>
-        RESULT_TYPE ResultType { get; set; }
+        ResultType ResultType { get; set; }
 
         /// <summary>
         /// Gets or sets the messages.

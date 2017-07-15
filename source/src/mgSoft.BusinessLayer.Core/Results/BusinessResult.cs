@@ -19,7 +19,7 @@ namespace mgSoft.BusinessLayer.Core.Results
         /// </summary>
         public BusinessResult()
         {
-            ResultType = RESULT_TYPE.SUCCESS;
+            ResultType = Results.ResultType.Success;
             ResultAction = ResultActionType.None;
             Messages = new List<IResultMessage>();
         }
@@ -29,7 +29,7 @@ namespace mgSoft.BusinessLayer.Core.Results
         /// </summary>
         /// <param name="resultType">Type of the result.</param>
         /// <param name="message">The message.</param>
-        public BusinessResult(RESULT_TYPE resultType, ResultMessage message)
+        public BusinessResult(ResultType resultType, ResultMessage message)
             : this()
         {
             ResultType = resultType;
@@ -61,7 +61,7 @@ namespace mgSoft.BusinessLayer.Core.Results
         /// The type of the result.
         /// </value>
         [DataMember]
-        public RESULT_TYPE ResultType { get; set; }
+        public ResultType ResultType { get; set; }
 
         /// <summary>
         /// Gets or sets the messages.

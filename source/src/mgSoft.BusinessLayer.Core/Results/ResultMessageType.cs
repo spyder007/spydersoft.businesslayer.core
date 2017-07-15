@@ -5,10 +5,10 @@
     /// </summary>
     public enum ResultMessageType
     {
-        INFORMATION,
-        WARNING,
-        ERROR,
-        ALERT,
-        CANCEL
+        Information,
+        Warning,
+        Error,
+        Alert,
+        Cancel
     }
 }

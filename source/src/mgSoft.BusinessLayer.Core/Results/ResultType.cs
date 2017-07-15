@@ -3,10 +3,10 @@
     /// <summary>
     /// Used to indicate the result of the save.
     /// </summary>
-    public enum RESULT_TYPE
+    public enum ResultType
     {
-        SUCCESS,
-        GENERAL_FAILURE,
-        VALIDATION_FAILURE
+        Success,
+        GeneralFailure,
+        ValidationFailure
     }
 }

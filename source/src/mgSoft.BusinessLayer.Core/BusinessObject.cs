@@ -25,7 +25,7 @@ namespace mgSoft.BusinessLayer.Core
         /// <summary>
         /// The Constant for a duplicate record error message.
         /// </summary>
-        public const string DUPLICATE_RECORD_MESSAGE = "Duplicate Record";
+        public const string DuplicateRecordMessage = "Duplicate Record";
 
         #endregion Constants
 
@@ -84,7 +84,7 @@ namespace mgSoft.BusinessLayer.Core
         [SkipCopy]
         protected TDataContract DataContract
         {
-            get { return _dataContract; }
+            get => _dataContract;
             set
             {
                 UnsubscribeDataContractEvents();
@@ -121,12 +121,12 @@ namespace mgSoft.BusinessLayer.Core
                     businessResult.ResultType = saveBusinessObjectResults.ResultType;
                 }
                 businessResult.IsSuccessful = saveBusinessObjectResults.IsSuccessful &&
-                                              saveBusinessObjectResults.ResultType == RESULT_TYPE.SUCCESS;
+                                              saveBusinessObjectResults.ResultType == ResultType.Success;
                 businessResult.Result = saveBusinessObjectResults.Result;
             }
             else
             {
-                businessResult.ResultType = RESULT_TYPE.VALIDATION_FAILURE;
+                businessResult.ResultType = ResultType.ValidationFailure;
             }
 
             return businessResult;
@@ -367,8 +367,8 @@ namespace mgSoft.BusinessLayer.Core
             }
             catch (Exception ex)
             {
-                saveBusinessObjectResults.Messages.Add(new ResultMessage(ResultMessageType.ERROR, ex.Message, ex.Message));
-                saveBusinessObjectResults.ResultType = RESULT_TYPE.GENERAL_FAILURE;
+                saveBusinessObjectResults.Messages.Add(new ResultMessage(ResultMessageType.Error, ex.Message, ex.Message));
+                saveBusinessObjectResults.ResultType = ResultType.GeneralFailure;
                 saveBusinessObjectResults.IsSuccessful = false;
             }
 
@@ -471,7 +471,7 @@ namespace mgSoft.BusinessLayer.Core
             {
                 resultList.Add(new ResultMessage()
                 {
-                    MessageType = ResultMessageType.ERROR,
+                    MessageType = ResultMessageType.Error,
                     Message = result.ErrorMessage,
                     ShortMessage = result.ErrorMessage,
                     PropertyName = result.MemberNames.FirstOrDefault()
@@ -497,7 +497,7 @@ namespace mgSoft.BusinessLayer.Core
                 {
                     resultList.Add(new ResultMessage()
                     {
-                        MessageType = ResultMessageType.ERROR,
+                        MessageType = ResultMessageType.Error,
                         Message = $"{keyProperty.Name} is already in use."
                     });
                 }

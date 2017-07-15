@@ -25,9 +25,9 @@ namespace mgSoft.BusinessLayer.Core
 
         public static bool HasHaltingMessages(this IEnumerable<ActionResult> results)
         {
-            return results.Any(r => r.MessageType == ResultMessageType.ERROR ||
-                                    r.MessageType == ResultMessageType.WARNING ||
-                                    r.MessageType == ResultMessageType.CANCEL);
+            return results.Any(r => r.MessageType == ResultMessageType.Error ||
+                                    r.MessageType == ResultMessageType.Warning ||
+                                    r.MessageType == ResultMessageType.Cancel);
         }
     }
 }
