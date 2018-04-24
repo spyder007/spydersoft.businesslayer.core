@@ -1,5 +1,6 @@
 ﻿namespace mgSoft.BusinessLayer.Core.Results
 {
+    /// <inheritdoc />
     /// <summary>
     /// A validation or general message from trying to save.
     /// </summary>
