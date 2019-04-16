@@ -9,11 +9,11 @@ namespace spyderSoft.BusinessLayer.Core.UnitTests
         public void EmptyConstructorTest()
         {
             var resultMessage = new ResultMessage();
-            Assert.IsInstanceOf<ResultMessage>(resultMessage);
-            Assert.IsNull(resultMessage.Message);
-            Assert.IsNull(resultMessage.ShortMessage);
-            Assert.IsNull(resultMessage.PropertyName);
-            Assert.AreEqual(ResultMessageType.Information, resultMessage.MessageType);
+            Assert.That(resultMessage, Is.InstanceOf<ResultMessage>());
+            Assert.That(resultMessage.Message, Is.Null);
+            Assert.That(resultMessage.ShortMessage, Is.Null);
+            Assert.That(resultMessage.PropertyName, Is.Null);
+            Assert.That(resultMessage.MessageType, Is.EqualTo(ResultMessageType.Information));
         }
 
         [Test]
@@ -26,10 +26,11 @@ namespace spyderSoft.BusinessLayer.Core.UnitTests
         {
             var resultMessage = new ResultMessage(type, shortMessage, message);
             Assert.IsInstanceOf<ResultMessage>(resultMessage);
-            Assert.AreEqual(message, resultMessage.Message);
-            Assert.AreEqual(shortMessage, resultMessage.ShortMessage);
-            Assert.IsNull(resultMessage.PropertyName);
-            Assert.AreEqual(type, resultMessage.MessageType);
+            Assert.That(resultMessage, Is.InstanceOf<ResultMessage>());
+            Assert.That(resultMessage.Message, Is.EqualTo(message));
+            Assert.That(resultMessage.ShortMessage, Is.EqualTo(shortMessage));
+            Assert.That(resultMessage.PropertyName, Is.Null);
+            Assert.That(resultMessage.MessageType, Is.EqualTo(type));
         }
 
         [Test]
@@ -41,11 +42,11 @@ namespace spyderSoft.BusinessLayer.Core.UnitTests
         public void TypeStringStringStringConstructorTest(ResultMessageType type, string shortMessage, string message, string propertyName)
         {
             var resultMessage = new ResultMessage(type, shortMessage, message, propertyName);
-            Assert.IsInstanceOf<ResultMessage>(resultMessage);
-            Assert.AreEqual(message, resultMessage.Message);
-            Assert.AreEqual(shortMessage, resultMessage.ShortMessage);
-            Assert.AreEqual(propertyName, resultMessage.PropertyName);
-            Assert.AreEqual(type, resultMessage.MessageType);
+            Assert.That(resultMessage, Is.InstanceOf<ResultMessage>());
+            Assert.That(resultMessage.Message, Is.EqualTo(message));
+            Assert.That(resultMessage.ShortMessage, Is.EqualTo(shortMessage));
+            Assert.That(resultMessage.PropertyName, Is.EqualTo(propertyName));
+            Assert.That(resultMessage.MessageType, Is.EqualTo(type));
         }
     }
 }
