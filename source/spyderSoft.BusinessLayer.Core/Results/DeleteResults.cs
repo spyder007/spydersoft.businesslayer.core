@@ -1,4 +1,17 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : spyderSoft.BusinessLayer.Core
+// Author           : matt
+// Created          : 08-07-2019
+//
+// Last Modified By : matt
+// Last Modified On : 08-07-2019
+// ***********************************************************************
+// <copyright file="DeleteResults.cs" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Collections.Generic;
 using System.Text;
 
 namespace spyderSoft.BusinessLayer.Core.Results
@@ -10,6 +23,9 @@ namespace spyderSoft.BusinessLayer.Core.Results
     {
         #region Private Variables
 
+        /// <summary>
+        /// The messages
+        /// </summary>
         private List<string> _messages;
 
         #endregion
@@ -17,7 +33,7 @@ namespace spyderSoft.BusinessLayer.Core.Results
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DeleteResults"/> class.
+        /// Initializes a new instance of the <see cref="DeleteResults" /> class.
         /// </summary>
         public DeleteResults()
         {
@@ -30,6 +46,7 @@ namespace spyderSoft.BusinessLayer.Core.Results
         /// <summary>
         /// Messages as a string - Read Only
         /// </summary>
+        /// <value>The messages.</value>
         public string Messages
         {
             get
@@ -41,6 +58,7 @@ namespace spyderSoft.BusinessLayer.Core.Results
         /// <summary>
         /// Indicated is the delete succeeded.  Read Only
         /// </summary>
+        /// <value><c>true</c> if this instance is successful; otherwise, <c>false</c>.</value>
         public bool IsSuccessful
         {
             get
@@ -66,6 +84,10 @@ namespace spyderSoft.BusinessLayer.Core.Results
 
         #region Private Methods
 
+        /// <summary>
+        /// Gets the messages.
+        /// </summary>
+        /// <returns>System.String.</returns>
         private string GetMessages()
         {
             StringBuilder sb = new StringBuilder();

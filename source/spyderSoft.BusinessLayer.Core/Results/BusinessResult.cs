@@ -1,4 +1,17 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : spyderSoft.BusinessLayer.Core
+// Author           : matt
+// Created          : 08-07-2019
+//
+// Last Modified By : matt
+// Last Modified On : 08-07-2019
+// ***********************************************************************
+// <copyright file="BusinessResult.cs" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -6,8 +19,10 @@ namespace spyderSoft.BusinessLayer.Core.Results
 {
     /// <summary>
     /// Creates a Result from a data operation for a Business Object.
+    /// Implements the <see cref="spyderSoft.BusinessLayer.Core.Results.IResult{TResult}" />
     /// </summary>
     /// <typeparam name="TResult">The type of the result.</typeparam>
+    /// <seealso cref="spyderSoft.BusinessLayer.Core.Results.IResult{TResult}" />
     [DataContract]
     public class BusinessResult<TResult>
         : IResult<TResult>
@@ -44,9 +59,7 @@ namespace spyderSoft.BusinessLayer.Core.Results
         /// <summary>
         /// Gets or sets the result action.
         /// </summary>
-        /// <value>
-        /// The result action.
-        /// </value>
+        /// <value>The result action.</value>
         [DataMember]
         public ResultActionType ResultAction { get; set; }
 
@@ -57,27 +70,21 @@ namespace spyderSoft.BusinessLayer.Core.Results
         /// <summary>
         /// Gets or sets the type of the result.
         /// </summary>
-        /// <value>
-        /// The type of the result.
-        /// </value>
+        /// <value>The type of the result.</value>
         [DataMember]
         public ResultType ResultType { get; set; }
 
         /// <summary>
         /// Gets or sets the messages.
         /// </summary>
-        /// <value>
-        /// The messages.
-        /// </value>
+        /// <value>The messages.</value>
         [DataMember]
         public List<IResultMessage> Messages { get; set; }
 
         /// <summary>
         /// Gets or sets the IsSuccessful.
         /// </summary>
-        /// <value>
-        /// The IsSuccessful.
-        /// </value>
+        /// <value>The IsSuccessful.</value>
         [DataMember]
         public bool IsSuccessful { get; set; }
 
@@ -85,9 +92,7 @@ namespace spyderSoft.BusinessLayer.Core.Results
         /// <summary>
         /// Gets or sets the results.
         /// </summary>
-        /// <value>
-        /// The results.
-        /// </value>
+        /// <value>The results.</value>
         [DataMember]
         public TResult Result { get; set; }
 
@@ -98,9 +103,7 @@ namespace spyderSoft.BusinessLayer.Core.Results
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
             return GetMessages();
