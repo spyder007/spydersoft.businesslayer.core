@@ -1,4 +1,17 @@
-﻿using spyderSoft.BusinessLayer.Core.Attributes;
+﻿// ***********************************************************************
+// Assembly         : spyderSoft.BusinessLayer.Core
+// Author           : matt
+// Created          : 08-07-2019
+//
+// Last Modified By : matt
+// Last Modified On : 08-07-2019
+// ***********************************************************************
+// <copyright file="BusinessObject.cs" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using spyderSoft.BusinessLayer.Core.Attributes;
 using spyderSoft.BusinessLayer.Core.Interfaces;
 using spyderSoft.BusinessLayer.Core.Results;
 using spyderSoft.DataLayer.Core;
@@ -13,11 +26,27 @@ using System.Runtime.Serialization;
 
 namespace spyderSoft.BusinessLayer.Core
 {
+    /// <summary>
+    /// Class BusinessObject.
+    /// Implements the <see cref="System.IDisposable" />
+    /// Implements the <see cref="spyderSoft.BusinessLayer.Core.Interfaces.IDataStoreConsumer" />
+    /// Implements the <see cref="spyderSoft.BusinessLayer.Core.Interfaces.IBusinessObject{TDataContract}" />
+    /// </summary>
+    /// <typeparam name="TDataContract">The type of the t data contract.</typeparam>
+    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="spyderSoft.BusinessLayer.Core.Interfaces.IDataStoreConsumer" />
+    /// <seealso cref="spyderSoft.BusinessLayer.Core.Interfaces.IBusinessObject{TDataContract}" />
     [DataContract]
     public abstract class BusinessObject<TDataContract>
             : IDisposable, IDataStoreConsumer, IBusinessObject<TDataContract> where TDataContract : class, IDataItem, new()
     {
+        /// <summary>
+        /// The data contract
+        /// </summary>
         private TDataContract _dataContract;
+        /// <summary>
+        /// The factory
+        /// </summary>
         private BusinessObjectFactory _factory;
 
         #region Constants
@@ -32,7 +61,7 @@ namespace spyderSoft.BusinessLayer.Core
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessObject{TDataContract}"/> class.
+        /// Initializes a new instance of the <see cref="BusinessObject{TDataContract}" /> class.
         /// </summary>
         /// <remarks>This constructor is required for LINQ queries.</remarks>
         protected BusinessObject()
@@ -41,13 +70,10 @@ namespace spyderSoft.BusinessLayer.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BusinessObject{TDataContract}"/> class.
+        /// Initializes a new instance of the <see cref="BusinessObject{TDataContract}" /> class.
         /// </summary>
-        /// <remarks>
-        /// This constructor is required to support the User object constructor with the same signature.
-        /// </remarks>
-        /// <param name="store">The store.</param>
         /// <param name="dataContract">The data contract.</param>
+        /// <remarks>This constructor is required to support the User object constructor with the same signature.</remarks>
         protected BusinessObject(TDataContract dataContract)
         {
             DataContract = dataContract;
@@ -57,30 +83,28 @@ namespace spyderSoft.BusinessLayer.Core
 
         #region IBusinessObject Implementation
 
+        /// <summary>
+        /// Gets the display name.
+        /// </summary>
+        /// <value>The display name.</value>
         public virtual string DisplayName => GetType().ToString();
 
         /// <summary>
         /// Gets the data contract identifier.
         /// </summary>
-        /// <value>
-        /// The data contract identifier.
-        /// </value>
+        /// <value>The data contract identifier.</value>
         public long DataContractId => DataContract?.Id ?? 0;
 
         /// <summary>
         /// Gets the business object data.
         /// </summary>
-        /// <value>
-        /// The business object data.
-        /// </value>
+        /// <value>The business object data.</value>
         internal TDataContract BusinessObjectData => DataContract;
 
         /// <summary>
         /// Gets or sets the data contract.
         /// </summary>
-        /// <value>
-        /// The data contract.
-        /// </value>
+        /// <value>The data contract.</value>
         [SkipCopy]
         protected TDataContract DataContract
         {
@@ -98,15 +122,14 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// The data store to use with the business object
         /// </summary>
+        /// <value>The store.</value>
         [SkipCopy]
         public IDataStore Store { get; set; }
 
         /// <summary>
         /// Validates and saves the business object
         /// </summary>
-        /// <returns>
-        /// A <see cref="BusinessResult{IBusinessObject}"/> class indicating success or errors
-        /// </returns>
+        /// <returns>A <see cref="BusinessResult{IBusinessObject}" /> class indicating success or errors</returns>
         public BusinessResult<IBusinessObject> Save()
         {
             var businessResult = new BusinessResult<IBusinessObject>();
@@ -132,6 +155,10 @@ namespace spyderSoft.BusinessLayer.Core
             return businessResult;
         }
 
+        /// <summary>
+        /// Loads the specified primary key.
+        /// </summary>
+        /// <param name="primaryKey">The primary key.</param>
         public void Load(long primaryKey)
         {
             DataContract = Store.GetItem<TDataContract>(primaryKey);
@@ -139,6 +166,10 @@ namespace spyderSoft.BusinessLayer.Core
             OnLoaded();
         }
 
+        /// <summary>
+        /// Loads the by key.
+        /// </summary>
+        /// <param name="key">The key.</param>
         public void LoadByKey(string key)
         {
             var contracts = Store.GetItems(KeySearchFunction(key));
@@ -150,6 +181,9 @@ namespace spyderSoft.BusinessLayer.Core
             }
         }
 
+        /// <summary>
+        /// Gets the identifier values.
+        /// </summary>
         public virtual void GetIdValues()
         {
         }
@@ -158,9 +192,7 @@ namespace spyderSoft.BusinessLayer.Core
         /// Validate the business object instance.
         /// This virtual base implementation performs required field validation.
         /// </summary>
-        /// <returns>
-        /// A <see cref="List{ResultMessage}"/> containing any validation errors.
-        /// </returns>
+        /// <returns>A <see cref="List{ResultMessage}" /> containing any validation errors.</returns>
         public List<ResultMessage> Validate()
         {
             List<ResultMessage> resultMessages = new List<ResultMessage>();
@@ -183,9 +215,7 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// Delete the business object from the data store
         /// </summary>
-        /// <returns>
-        /// Object indicating the results of the delete
-        /// </returns>
+        /// <returns>Object indicating the results of the delete</returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public virtual DeleteResults Delete()
         {
@@ -250,14 +280,29 @@ namespace spyderSoft.BusinessLayer.Core
 
         #region BusinessObject Interface
 
+        /// <summary>
+        /// Gets the key.
+        /// </summary>
+        /// <value>The key.</value>
         public abstract string Key { get; }
 
+        /// <summary>
+        /// Gets or sets the date created.
+        /// </summary>
+        /// <value>The date created.</value>
         [SkipCopy]
         public abstract DateTimeOffset DateCreated { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date updated.
+        /// </summary>
+        /// <value>The date updated.</value>
         [SkipCopy]
         public abstract DateTimeOffset DateUpdated { get; set; }
 
+        /// <summary>
+        /// Sets the identifier from key fields.
+        /// </summary>
         public void SetIdFromKeyFields()
         {
             var lookupFields = GetType().GetTypeInfo().DeclaredProperties.Where(x => x.CanRead && x.GetCustomAttributes<LookupFieldAttribute>().Any()).ToList();
@@ -290,6 +335,9 @@ namespace spyderSoft.BusinessLayer.Core
             }
         }
 
+        /// <summary>
+        /// Sets the key fields from identifier.
+        /// </summary>
         public void SetKeyFieldsFromId()
         {
             var lookupKeyFields = GetType().GetTypeInfo().DeclaredProperties.Where(x => x.CanWrite && x.GetCustomAttributes<LookupFieldAttribute>().Any()).ToList();
@@ -346,9 +394,7 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// Saves the business object.  This is overridable.
         /// </summary>
-        /// <returns>
-        /// A <see cref="BusinessResult{IBusinessObject}"/> indicating success or errors
-        /// </returns>
+        /// <returns>A <see cref="BusinessResult{IBusinessObject}" /> indicating success or errors</returns>
         protected virtual BusinessResult<IBusinessObject> SaveBusinessObject()
         {
             var saveBusinessObjectResults = new BusinessResult<IBusinessObject>
@@ -392,7 +438,6 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// Called when [saving].
         /// </summary>
-        /// TODO Edit XML Comment Template for OnSaving
         protected virtual void OnSaving()
         {
         }
@@ -400,7 +445,6 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// Called when [saved].
         /// </summary>
-        /// TODO Edit XML Comment Template for OnSaved
         protected virtual void OnSaved()
         {
         }
@@ -408,16 +452,24 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// Called when [loaded].
         /// </summary>
-        /// TODO Edit XML Comment Template for OnLoaded
         protected virtual void OnLoaded()
         {
         }
 
+        /// <summary>
+        /// Validates the object.
+        /// </summary>
+        /// <returns>List&lt;ResultMessage&gt;.</returns>
         protected virtual List<ResultMessage> ValidateObject()
         {
             return new List<ResultMessage>();
         }
 
+        /// <summary>
+        /// Keys the search function.
+        /// </summary>
+        /// <param name="searchString">The search string.</param>
+        /// <returns>Expression&lt;Func&lt;TDataContract, System.Boolean&gt;&gt;.</returns>
         protected abstract Expression<Func<TDataContract, bool>> KeySearchFunction(string searchString);
 
         /// <summary>
@@ -440,9 +492,7 @@ namespace spyderSoft.BusinessLayer.Core
         /// <summary>
         /// Validates for save.
         /// </summary>
-        /// <returns>
-        /// A <see cref="List{ResultMessage}"/> containing any validation errors.
-        /// </returns>
+        /// <returns>A <see cref="List{ResultMessage}" /> containing any validation errors.</returns>
         public List<IResultMessage> ValidateForSave()
         {
             var allMessages = new List<IResultMessage>();
@@ -458,9 +508,7 @@ namespace spyderSoft.BusinessLayer.Core
         /// Validate that the required fields have values and that they are appropriate.
         /// The required fields are determined via virtual method GetRequiredFields and that should be overridden for each business object implementation.
         /// </summary>
-        /// <returns>
-        /// A <see cref="List{ResultMessage}"/> containing any validation errors.
-        /// </returns>
+        /// <returns>A <see cref="List{ResultMessage}" /> containing any validation errors.</returns>
         public List<ResultMessage> ValidateObjectProperties()
         {
             List<ValidationResult> results = new List<ValidationResult>();
@@ -588,7 +636,6 @@ namespace spyderSoft.BusinessLayer.Core
         /// Stamps the date fields.
         /// </summary>
         /// <param name="isCreate">if set to <c>true</c> [is create].</param>
-        /// TODO Edit XML Comment Template for StampDateFields
         private void SetTimeStampFields(bool isCreate)
         {
             DateUpdated = DateTimeOffset.UtcNow;
@@ -598,11 +645,21 @@ namespace spyderSoft.BusinessLayer.Core
             }
         }
 
+        /// <summary>
+        /// Handles the ValueChanged event of the DataContract control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DataItemEventArgs"/> instance containing the event data.</param>
         private void DataContract_ValueChanged(object sender, DataItemEventArgs e)
         {
             OnBusinessPropertyChanged(e.PropertyName);
         }
 
+        /// <summary>
+        /// Loads the business object.
+        /// </summary>
+        /// <param name="primaryKey">The primary key.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         private bool LoadBusinessObject(int primaryKey)
         {
             var dc = Store.GetItem<TDataContract>(primaryKey);
@@ -610,6 +667,12 @@ namespace spyderSoft.BusinessLayer.Core
             return (dc != null);
         }
 
+        /// <summary>
+        /// Gets the key for identifier.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="codeId">The code identifier.</param>
+        /// <returns>System.String.</returns>
         protected string GetKeyForId<T>(long codeId) where T : IBusinessObject
         {
             T lookupObject = _factory.Load<T>(codeId);
@@ -622,6 +685,12 @@ namespace spyderSoft.BusinessLayer.Core
             return null;
         }
 
+        /// <summary>
+        /// Gets the key for identifier.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="codeId">The code identifier.</param>
+        /// <returns>System.String.</returns>
         protected string GetKeyForId(Type type, long codeId)
         {
             MethodInfo method = typeof(BusinessObjectFactory).GetTypeInfo().GetDeclaredMethods("Load").First(m => m.GetParameters()[0].ParameterType == typeof(long));
@@ -631,6 +700,12 @@ namespace spyderSoft.BusinessLayer.Core
             return returnValue?.Key;
         }
 
+        /// <summary>
+        /// Gets the identifier from key.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="code">The code.</param>
+        /// <returns>System.Int64.</returns>
         protected long GetIdFromKey<T>(string code) where T : IBusinessObject
         {
             T lookupObject = _factory.Load<T>(code);
@@ -643,6 +718,12 @@ namespace spyderSoft.BusinessLayer.Core
             return 0;
         }
 
+        /// <summary>
+        /// Gets the identifier from key.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="code">The code.</param>
+        /// <returns>System.Int64.</returns>
         protected long GetIdFromKey(Type type, string code)
         {
             MethodInfo method = typeof(BusinessObjectFactory).GetTypeInfo().GetDeclaredMethods("Load").First(m => m.GetParameters()[0].ParameterType == typeof(string));

@@ -1,4 +1,17 @@
-﻿using System.Reflection;
+﻿// ***********************************************************************
+// Assembly         : spyderSoft.BusinessLayer.Core
+// Author           : matt
+// Created          : 08-07-2019
+//
+// Last Modified By : matt
+// Last Modified On : 08-07-2019
+// ***********************************************************************
+// <copyright file="AssemblyInfo.cs" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
